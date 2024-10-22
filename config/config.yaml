@@ -1,0 +1,24 @@
+"""
+api_keys:
+  twitter:
+    api_key: ""
+    api_secret: ""
+    access_token: ""
+    access_token_secret: ""
+  alpha_vantage:
+    api_key: ""
+  news_api:
+    api_key: ""
+neo4j:
+  uri: "neo4j://localhost:7687"
+  user: "neo4j"
+  password: ""
+
+pathway:
+  window_size: "1h"
+  stride: "5m"
+
+monitoring:
+  log_level: "INFO"
+  enable_metrics: true
+"""

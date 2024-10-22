@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+  marketing-pipeline:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: marketing-pipeline
+    volumes:
+      - ../data:/app/data
+      - ../logs:/app/logs
+      - ../config:/app/config
+    environment:
+      - NEO4J_URI=neo4j://neo4j:7687
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - neo4j
+    networks:
+      - marketing-network
+    restart: unless-stopped
+
+  neo4j:
+    image: neo4j:4.4
+    container_name: neo4j
+    ports:
+      - "7474:7474"  # HTTP
+      - "7687:7687"  # Bolt
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+      - neo4j_import:/var/lib/neo4j/import
+      - neo4j_plugins:/plugins
+    environment:
+      - NEO4J_AUTH=neo4j/your_password
+      - NEO4J_dbms_memory_pagecache_size=1G
+      - NEO4J_dbms.memory.heap.initial_size=1G
+      - NEO4J_dbms_memory_heap_max__size=1G
+    networks:
+      - marketing-network
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - marketing-network
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=your_grafana_password
+    depends_on:
+      - prometheus
+    networks:
+      - marketing-network
+    restart: unless-stopped
+
+volumes:
+  neo4j_data:
+  neo4j_logs:
+  neo4j_import:
+  neo4j_plugins:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  marketing-network:
+    driver: bridge
