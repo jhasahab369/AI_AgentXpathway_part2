@@ -1,12 +1,11 @@
 # AI_AgentXpathway_part2
-# Smart Traffic Navigation System
 Author: Bibhuti Jha .
-I implemented Pathway data pipeline , and stroring it in neo4j graph database.
+I implemented Pathway data pipeline , and storing it in neo4j graph database.
 Here's the architecture-
 ## Architecture Overview
 
 <div align="center">
-  <img src="./images/architecture-social-media.png" alt="Traffic Navigation System Architecture" width="800"/>
+  <img src="./images/archi.png" alt="Traffic Navigation System Architecture" width="800"/>
 </div>
 
 
