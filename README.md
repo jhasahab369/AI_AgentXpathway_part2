@@ -1,7 +1,7 @@
 # AI_AgentXpathway_part2
 Author: Bibhuti Jha .
 I implemented Pathway data pipeline , and storing it in neo4j graph database.
-Here's the architecture-
+Here's the architecture diagram I proposed-
 ## Architecture Overview
 
 <div align="center">
